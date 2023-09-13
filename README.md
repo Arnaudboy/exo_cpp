@@ -15,6 +15,12 @@ cmake --build .
 
 ## Build and run
 
+To record data
 ```sh
-cmake --build . && ./record_reader -j 0 -f record_file_name
+cmake --build . && ./record_reader -r 1 -f record_file_name
+```
+
+To replay record
+```sh
+cmake --build . && ./record_reader -p 1 -j 0 -f record_file_name
 ```
