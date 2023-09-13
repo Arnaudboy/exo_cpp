@@ -68,6 +68,7 @@ void record_user_input(std::queue<int> & numbers, std::condition_variable & cv, 
     auto current = std::chrono::system_clock::now();
     auto current_time = std::chrono::duration_cast<std::chrono::seconds>(current - start);
     fileRecorder.add_measure(numbers.front(), current_time);
+    fileRecorder.end_record();
 }
 
 void record_and_save (std::string&& file_name) {
