@@ -3,7 +3,9 @@
 #include <thread>
 #include <cstdlib>
 #include <chrono>
+#include <memory>
 #include "recorder.h"
+#include "FileRecorder.h"
 
 //counts every number that is added to the queue
 static long long producer_count = 0;
@@ -39,10 +41,11 @@ void capture_user_input(std::queue<int> & numbers, std::condition_variable & cv,
      }
 }
 
-void record_user_input(std::queue<int> & numbers, std::condition_variable & cv, std::mutex & m, std::atomic<bool> & workdone)
+void record_user_input(std::queue<int> & numbers, std::condition_variable & cv, std::mutex & m, std::atomic<bool> & workdone, std::string&& file_name)
 {
     std::chrono::time_point<std::chrono::system_clock> start;
     bool bStarted = false;
+    FileRecorder fileRecorder(std::forward<std::string&&>(file_name));
     while(!workdone.load())
     {
         std::unique_lock<std::mutex> lk(m);
@@ -53,18 +56,21 @@ void record_user_input(std::queue<int> & numbers, std::condition_variable & cv, 
                 bStarted = true;
             } else {
                 auto current = std::chrono::system_clock::now();
-                auto current_time = std::chrono::duration_cast<std::chrono::seconds>(current - start).count();
-                std::cout << "Time since start: " << current_time << "(s)" << std::endl;
+                auto current_time = std::chrono::duration_cast<std::chrono::seconds>(current - start);
+                fileRecorder.add_measure(numbers.front(), current_time);
+                numbers.pop();
             }
-            numbers.pop();
             consumer_count++;
         }
         cv.notify_one(); // Notify generator (placed here to avoid waiting for the lock)
         cv.wait(lk); // Wait for the generator to complete
-     }
+    }
+    auto current = std::chrono::system_clock::now();
+    auto current_time = std::chrono::duration_cast<std::chrono::seconds>(current - start);
+    fileRecorder.add_measure(numbers.front(), current_time);
 }
 
-void record_and_save () {
+void record_and_save (std::string&& file_name) {
     std::condition_variable cv;
     std::mutex m;
     std::atomic<bool> workdone(false);
@@ -72,7 +78,7 @@ void record_and_save () {
 
     //start threads
     std::thread producer(capture_user_input, std::ref(numbers), std::ref(cv), std::ref(m), std::ref(workdone));
-    std::thread consumer(record_user_input, std::ref(numbers), std::ref(cv), std::ref(m), std::ref(workdone));
+    std::thread consumer(record_user_input, std::ref(numbers), std::ref(cv), std::ref(m), std::ref(workdone), std::forward<std::string&&>(file_name));
 
     producer.join();
     consumer.join();

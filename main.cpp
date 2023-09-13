@@ -1,4 +1,5 @@
 #include <iostream>
+#include <memory>
 #include "cmd_ops.h"
 #include "recorder.h"
 
@@ -34,8 +35,8 @@ int main(int argc, const char* argv[]) {
 
     std::cout << "stringOpt = " << myopts.fileOpt << endl;
     std::cout << "doRecord = " << myopts.doRecord << endl;
-    if (myopts.doRecord) {
-        record_and_save();
+    if (myopts.doRecord && !myopts.fileOpt.empty()) {
+        record_and_save(std::move(myopts.fileOpt));
     }
     return 0;
 }
