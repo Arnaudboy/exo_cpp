@@ -7,6 +7,12 @@ cmake .
 cmake --build .
 ```
 
+For debug build:
+```sh
+cmake -DCMAKE_BUILD_TYPE=Debug .
+cmake --build .
+```
+
 ## Build and run
 
 ```sh
