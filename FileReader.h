@@ -22,7 +22,7 @@ private:
     unsigned int _nb_records;
     std::string _file_name;
     std::vector<Measurement> _section_buffer;
-    std::ofstream _record_file;
+    std::fstream _record_file;
 
     void read_next_section();
     void read_section_header();
