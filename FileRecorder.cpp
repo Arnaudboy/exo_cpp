@@ -1,7 +1,7 @@
 #include <iostream>
 #include "FileRecorder.h"
 
-FileRecorder::FileRecorder(std::string &&file_name) : _file_name(file_name), _record_duration(0), _nb_records(0)
+FileRecorder::FileRecorder(std::string &&file_name) : _file_name(std::forward<std::string>(file_name)), _record_duration(0), _nb_records(0)
 {
     _measurements_buffer.reserve(_section_size);
 }
