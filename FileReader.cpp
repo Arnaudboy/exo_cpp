@@ -3,6 +3,7 @@
 FileReader::FileReader(std::string &&file_name) : _file_name(std::forward<std::string>(file_name)), _measurement_pointer(0)
 {
     _record_file.open(_file_name, std::ios::in | std::ios::binary);
+    read_section_header();
 }
 
 FileReader::~FileReader()
@@ -40,5 +41,10 @@ Measurement *FileReader::read_measurement()
 }
 
 void FileReader::read_next_section()
+{
+    read_section_header();
+}
+
+void FileReader::read_section_header()
 {
 }

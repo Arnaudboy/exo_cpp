@@ -25,4 +25,5 @@ private:
     std::ofstream _record_file;
 
     void read_next_section();
+    void read_section_header();
 };
