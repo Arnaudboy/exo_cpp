@@ -16,6 +16,6 @@ typedef struct
 
 typedef struct
 {
-    unsigned int section_duration;
+    std::chrono::seconds section_duration;
     unsigned int section_size;
 } SectionHeader;
