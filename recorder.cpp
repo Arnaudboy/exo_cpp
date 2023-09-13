@@ -10,7 +10,7 @@ static long long producer_count = 0;
 //counts every number that is taken out of the queue
 static long long consumer_count = 0;
 
-void generateNumbers(std::queue<int> & numbers, std::condition_variable & cv, std::mutex & m, std::atomic<bool> & workdone)
+void capture_user_input(std::queue<int> & numbers, std::condition_variable & cv, std::mutex & m, std::atomic<bool> & workdone)
 {
     while(!workdone.load())
     {   
@@ -39,7 +39,7 @@ void generateNumbers(std::queue<int> & numbers, std::condition_variable & cv, st
      }
 }
 
-void work(std::queue<int> & numbers, std::condition_variable & cv, std::mutex & m, std::atomic<bool> & workdone)
+void record_user_input(std::queue<int> & numbers, std::condition_variable & cv, std::mutex & m, std::atomic<bool> & workdone)
 {
     std::chrono::time_point<std::chrono::system_clock> start;
     bool bStarted = false;
@@ -71,8 +71,8 @@ void record_and_save () {
     std::queue<int> numbers;
 
     //start threads
-    std::thread producer(generateNumbers, std::ref(numbers), std::ref(cv), std::ref(m), std::ref(workdone));
-    std::thread consumer(work, std::ref(numbers), std::ref(cv), std::ref(m), std::ref(workdone));
+    std::thread producer(capture_user_input, std::ref(numbers), std::ref(cv), std::ref(m), std::ref(workdone));
+    std::thread consumer(record_user_input, std::ref(numbers), std::ref(cv), std::ref(m), std::ref(workdone));
 
     producer.join();
     consumer.join();
