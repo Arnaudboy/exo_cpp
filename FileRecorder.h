@@ -29,7 +29,9 @@ class FileRecorder {
         std::string _file_name;
         std::vector<Measurement> _measurements_buffer;
         std::chrono::seconds _record_duration;
+        unsigned int _nb_records;
         void record_section(std::vector<Measurement>& _section_buffer);
+        void record_main_header();
         void record_section_header(Section& _section);
         void record_section_data(Section& _section);
 };

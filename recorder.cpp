@@ -65,9 +65,13 @@ void record_user_input(std::queue<int> & numbers, std::condition_variable & cv, 
         cv.notify_one(); // Notify generator (placed here to avoid waiting for the lock)
         cv.wait(lk); // Wait for the generator to complete
     }
-    auto current = std::chrono::system_clock::now();
-    auto current_time = std::chrono::duration_cast<std::chrono::seconds>(current - start);
-    fileRecorder.add_measure(numbers.front(), current_time);
+    if (numbers.size() > 0) {
+        auto current = std::chrono::system_clock::now();
+        auto current_time = std::chrono::duration_cast<std::chrono::seconds>(current - start);
+        fileRecorder.add_measure(numbers.front(), current_time);
+        numbers.pop();
+        assert(numbers.size() == 0);
+    }
     fileRecorder.end_record();
 }
 
