@@ -15,6 +15,8 @@ void play_file(FileReader& file_reader) {
     auto measurement = file_reader.read_measurement();
     while (measurement != nullptr) {
         std::cout << "Measuring: " << measurement->measurement << std::endl;
+        std::cout << "Waiting for: " << measurement->timestamp.count() << std::endl;
         std::this_thread::sleep_for(std::chrono::seconds(measurement->timestamp));
+        measurement = file_reader.read_measurement();
     }
 }
