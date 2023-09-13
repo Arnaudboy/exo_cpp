@@ -22,8 +22,10 @@ void FileReader::jump_to_percent(unsigned int percent)
 
 Measurement *FileReader::read_measurement()
 {
-    if (_section_buffer.empty())
+    if (_section_buffer.empty() || _measurement_pointer >= _nb_records)
     {
+        _section_buffer.clear();
+        _measurement_pointer = 0;
         read_next_section();
     }
     if (_section_buffer.empty())
@@ -32,11 +34,6 @@ Measurement *FileReader::read_measurement()
     }
     auto measurement = &_section_buffer[_measurement_pointer];
     _measurement_pointer++;
-    if (_measurement_pointer > SECTION_SIZE)
-    {
-        _section_buffer.clear();
-        _measurement_pointer = 0;
-    }
     return measurement;
 }
 

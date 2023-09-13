@@ -13,10 +13,23 @@ void play_file_from(unsigned int percent, std::string&& file_name) {
 
 void play_file(FileReader& file_reader) {
     auto measurement = file_reader.read_measurement();
+    std::chrono::seconds time_point;
+    bool isFirst = true;
     while (measurement != nullptr) {
-        std::cout << "Measuring: " << measurement->measurement << std::endl;
-        std::cout << "Waiting for: " << measurement->timestamp.count() << std::endl;
-        std::this_thread::sleep_for(std::chrono::seconds(measurement->timestamp));
+        std::cout << "Measuring: " << measurement->measurement << " ";
+        if (isFirst)
+        {
+            isFirst = false;
+            std::this_thread::sleep_for(std::chrono::seconds(measurement->timestamp));
+            std::cout << "Waiting for: " << measurement->timestamp.count() << std::endl;
+        }
+        else
+        {
+            auto waiting_time = measurement->timestamp - time_point;
+            std::this_thread::sleep_for(waiting_time);
+            std::cout << "Waiting for: " << waiting_time.count() << std::endl;
+        }
+        time_point = measurement->timestamp;
         measurement = file_reader.read_measurement();
     }
 }
