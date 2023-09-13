@@ -25,5 +25,5 @@ private:
     std::fstream _record_file;
 
     void read_next_section();
-    void read_section_header();
+    SectionHeader read_section_header();
 };

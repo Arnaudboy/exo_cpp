@@ -43,8 +43,10 @@ Measurement *FileReader::read_measurement()
 void FileReader::read_next_section()
 {
     read_section_header();
+    _section_pointer++;
 }
 
-void FileReader::read_section_header()
+SectionHeader FileReader::read_section_header()
 {
+    return SectionHeader{};
 }
