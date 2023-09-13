@@ -13,3 +13,9 @@ typedef struct
     unsigned int nb_records;
     Measurement measurements[SECTION_SIZE];
 } Section;
+
+typedef struct
+{
+    unsigned int section_duration;
+    unsigned int section_size;
+} SectionHeader;
