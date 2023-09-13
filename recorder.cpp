@@ -18,7 +18,7 @@ void capture_user_input(std::queue<int> &numbers, std::condition_variable &cv, s
     {
         std::unique_lock<std::mutex> lk(m);
         std::string value;
-        std::cout << "Input temperature: ";
+        std::cout << "Input value: ";
         getline(std::cin, value);
         if (value == "stop")
         {
@@ -52,9 +52,9 @@ void record_user_input(std::queue<int> &numbers, std::condition_variable &cv, st
     std::chrono::time_point<std::chrono::system_clock> start;
     bool bStarted = false;
     FileRecorder fileRecorder(std::forward<std::string &&>(file_name));
+    std::unique_lock<std::mutex> lk(m);
     while (!workdone.load())
     {
-        std::unique_lock<std::mutex> lk(m);
         if (numbers.size() > 0)
         {
             std::cout << "Received: " << numbers.front() << std::endl;
