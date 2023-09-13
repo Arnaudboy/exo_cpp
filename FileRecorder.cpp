@@ -8,8 +8,11 @@ FileRecorder::FileRecorder(std::string &&file_name) : _file_name(std::forward<st
 
 void FileRecorder::end_record()
 {
-    record_section(_measurements_buffer);
-    record_main_header();
+    if (_measurements_buffer.size() > 0)
+    {
+        record_section(_measurements_buffer);
+        record_main_header();
+    }
     _measurements_buffer.clear();
 }
 
