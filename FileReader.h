@@ -1,5 +1,6 @@
 #include <string>
 #include <vector>
+#include <fstream>
 #include "RecordStruct.h"
 
 class FileReader
@@ -19,6 +20,7 @@ private:
     unsigned int _nb_records;
     std::string _file_name;
     std::vector<Measurement> _section_buffer;
+    std::ofstream _record_file;
 
     void read_next_section();
 };

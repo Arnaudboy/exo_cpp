@@ -2,11 +2,13 @@
 
 FileReader::FileReader(std::string &&file_name) : _file_name(std::forward<std::string>(file_name)), _measurement_pointer(0)
 {
+    _record_file.open(_file_name, std::ios::in | std::ios::binary);
 }
 
 FileReader::~FileReader()
 {
     _section_buffer.clear();
+    _record_file.close();
 }
 
 void FileReader::jump_to_percent(unsigned int percent)

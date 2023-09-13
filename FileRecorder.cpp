@@ -4,6 +4,12 @@
 FileRecorder::FileRecorder(std::string &&file_name) : _file_name(std::forward<std::string>(file_name)), _record_duration(0), _nb_records(0)
 {
     _measurements_buffer.reserve(_section_size);
+    _record_file.open(_file_name, std::ios::out | std::ios::binary);
+}
+
+FileRecorder::~FileRecorder()
+{
+    _record_file.close();
 }
 
 void FileRecorder::end_record()
@@ -14,6 +20,7 @@ void FileRecorder::end_record()
         record_main_header();
     }
     _measurements_buffer.clear();
+    _record_file.close();
 }
 
 void FileRecorder::add_measure(int measurement, std::chrono::seconds timestamp)
