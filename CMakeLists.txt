@@ -9,4 +9,5 @@ add_executable(
   recorder.cpp
   FileRecorder.cpp
   FileReader.cpp
+  reader.cpp
 )

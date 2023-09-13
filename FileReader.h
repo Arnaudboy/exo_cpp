@@ -13,10 +13,10 @@ public:
     ~FileReader();
 
     void jump_to_percent(unsigned int percent);
-    Measurement* read_measurement();
+    Measurement *read_measurement();
 
 private:
-    unsigned int _section_pointer; // current section
+    unsigned int _section_pointer;     // current section
     unsigned int _measurement_pointer; // current measurement inside current section
     std::chrono::seconds _record_duration;
     unsigned int _nb_records;

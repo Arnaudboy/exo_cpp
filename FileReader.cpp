@@ -13,6 +13,10 @@ FileReader::~FileReader()
 
 void FileReader::jump_to_percent(unsigned int percent)
 {
+    if (percent == 0)
+    {
+        return;
+    }
 }
 
 Measurement *FileReader::read_measurement()
