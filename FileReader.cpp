@@ -39,7 +39,8 @@ Measurement *FileReader::read_measurement()
 
 void FileReader::read_next_section()
 {
-    read_section_header();
+    auto sectionHeader = read_section_header();
+    (void)(sectionHeader); // disable builder warning
     _section_pointer++;
 }
 

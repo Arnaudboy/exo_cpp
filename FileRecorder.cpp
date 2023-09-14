@@ -17,9 +17,9 @@ void FileRecorder::end_record()
     if (_measurements_buffer.size() > 0)
     {
         record_section(_measurements_buffer);
-        record_main_header();
     }
     _measurements_buffer.clear();
+    record_main_header();
     _record_file.close();
 }
 
