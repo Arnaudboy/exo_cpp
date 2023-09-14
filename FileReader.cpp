@@ -20,6 +20,12 @@ void FileReader::jump_to_percent(unsigned int percent)
     }
 }
 
+SectionHeader FileReader::jump_to_section(unsigned int section_num)
+{
+    // TODO: jump to section
+    return read_section_header();
+}
+
 Measurement *FileReader::read_measurement()
 {
     if (_section_buffer.empty() || _measurement_pointer >= _nb_records)
