@@ -26,4 +26,5 @@ private:
 
     void read_next_section();
     SectionHeader read_section_header();
+    SectionHeader read_main_header();
 };

@@ -48,3 +48,9 @@ SectionHeader FileReader::read_section_header()
 {
     return SectionHeader{};
 }
+
+SectionHeader FileReader::read_main_header()
+{
+    // move to the begining of the file
+    return read_section_header();
+}
