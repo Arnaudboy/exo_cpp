@@ -21,15 +21,15 @@ void play_file(FileReader& file_reader, const unsigned int & percent) {
         {
             isFirst = false;
             if (percent == 0 || percent >= 100) {
-                std::this_thread::sleep_for(std::chrono::seconds(measurement->timestamp));
                 std::cout << "Waiting for: " << measurement->timestamp.count() << std::endl;
+                std::this_thread::sleep_for(std::chrono::seconds(measurement->timestamp));
             }
         }
         else
         {
             auto waiting_time = measurement->timestamp - time_point;
-            std::this_thread::sleep_for(waiting_time);
             std::cout << "Waiting for: " << waiting_time.count() << std::endl;
+            std::this_thread::sleep_for(waiting_time);
         }
         time_point = measurement->timestamp;
         measurement = file_reader.read_measurement();
