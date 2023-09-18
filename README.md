@@ -22,7 +22,7 @@ Par exemple si on a un capteur de température mesurant la température au dixi�
 
 Pour permettre de naviguer plus efficacement dans le fichier lors de la lecture, le format de fichier divise les mesures en sections de taille SECTION_SIZE (dans le code on definit `#define SECTION_SIZE 3`).
 
-Chaque section commence par un en-tête qui indique la durée de la section et le nombre de mesures dans la section.
+Chaque section commence par un en-tête qui indique la durée de la section et le nombre de mesures qu'elle contient.
 
 L'en-tête de section ressemble à ce qui suit:
 
