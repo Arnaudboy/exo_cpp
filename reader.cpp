@@ -8,10 +8,10 @@
 void play_file_from(unsigned int percent, std::string&& file_name) {
     auto file_reader = FileReader(std::forward<std::string>(file_name));
     file_reader.jump_to_percent(percent);
-    play_file(file_reader);
+    play_file(file_reader, percent);
 }
 
-void play_file(FileReader& file_reader) {
+void play_file(FileReader& file_reader, const unsigned int & percent) {
     auto measurement = file_reader.read_measurement();
     std::chrono::seconds time_point;
     bool isFirst = true;
@@ -20,8 +20,10 @@ void play_file(FileReader& file_reader) {
         if (isFirst)
         {
             isFirst = false;
-            std::this_thread::sleep_for(std::chrono::seconds(measurement->timestamp));
-            std::cout << "Waiting for: " << measurement->timestamp.count() << std::endl;
+            if (percent == 0 || percent >= 100) {
+                std::this_thread::sleep_for(std::chrono::seconds(measurement->timestamp));
+                std::cout << "Waiting for: " << measurement->timestamp.count() << std::endl;
+            }
         }
         else
         {
