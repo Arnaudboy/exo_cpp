@@ -47,12 +47,15 @@ void FileRecorder::record_main_header()
 {
     std::cout << "> [Record] Total size: " << _nb_records << std::endl;
     std::cout << "> [Record] Total duration: " << _record_duration.count() << "(s)" << std::endl;
+    _record_file.write((char *)&_nb_records, sizeof(_nb_records));
+    _record_file.write((char *)&_record_duration, sizeof(_record_duration));
 }
 
 void FileRecorder::record_section_header(Section &_section)
 {
     std::cout << "> [Record] Section size: " << _section.nb_records << std::endl;
     std::cout << "> [Record] Section duration: " << _section.duration.count() << "(s)" << std::endl;
+    _record_file.write((char *)&_section, sizeof(_section));
 }
 
 void FileRecorder::record_section_data(Section &_section)
@@ -65,6 +68,7 @@ void FileRecorder::record_section_data(Section &_section)
             break;
         }
         std::cout << "> [Record] Data in section: " << data.measurement << " timestamp: " << data.timestamp.count() << "(s)" << std::endl;
+        _record_file.write((char *)&data, sizeof(data));
         i++;
     }
 }
